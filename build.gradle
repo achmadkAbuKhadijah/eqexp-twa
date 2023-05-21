@@ -19,6 +19,7 @@
 buildscript {
 
     ext {
+        gradle_version = '8.0.1'
         kotlin_version = '1.8.21'
     }
     repositories {
@@ -26,7 +27,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.0.1'
+        classpath "com.android.tools.build:gradle:$gradle_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong

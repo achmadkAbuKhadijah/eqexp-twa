@@ -207,7 +207,7 @@ repositories {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-        implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.4.0'
+    implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.4.0'
     implementation 'androidx.core:core-ktx:1.10.1'
 
 }
