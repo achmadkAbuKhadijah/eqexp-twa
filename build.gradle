@@ -19,7 +19,7 @@
 buildscript {
 
     ext {
-        gradle_version = '8.0.2'
+        gradle_version = '8.1.0'
         kotlin_version = '1.8.21'
     }
     repositories {
@@ -42,6 +42,6 @@ allprojects {
     }
 }
 
-task clean(type: Delete) {
+tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }
