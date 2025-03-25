@@ -64,7 +64,7 @@ data class TWAManifest(
     // - short_name: Shorter string used if |name| is too long.
     // - url: Absolute path of the URL to launch the app with (e.g '/create').
     // - icon: Name of the resource in the drawable folder to use as an icon.
-    val shortcuts: Array<TWAManifestOnlyShortcut> = emptyArray<TWAManifestOnlyShortcut>(),
+    val shortcuts: Array<TWAManifestOnlyShortcut>? = emptyArray<TWAManifestOnlyShortcut>(),
     // The duration of fade out animation in milliseconds to be played when removing splash screen.
     val splashScreenFadeOutDuration: Number = 300,
     val generatorApp: String = "bubblewrap-cli", // Application that generated the Android Project
@@ -152,8 +152,8 @@ android {
     }
     defaultConfig {
         applicationId = twaManifest.applicationId
-        minSdk = 19
-        targetSdk = 35
+        minSdk = 21
+        targetSdk = 36
         versionCode = 1
         versionName = "1"
 
@@ -222,7 +222,7 @@ android {
         // attributes
         resValue("bool", "enableNotification", twaManifest.enableNotifications.toString())
 
-        twaManifest.shortcuts.forEachIndexed { shortcut, index ->
+        twaManifest.shortcuts?.forEachIndexed { shortcut, index ->
             resValue("string", "shortcut_name_$index", "$shortcut.name")
             resValue("string", "shortcut_short_name_$index", "$shortcut.short_name")
         }
@@ -250,13 +250,13 @@ android {
 }
 
 tasks.register("generateShorcutsFile") {
-        assert(twaManifest.shortcuts.size < 5)  { "You can have at most 4 shortcuts." }
-        twaManifest.shortcuts.forEachIndexed { i, s ->
-            assert(s.name != null) { "Missing `name` in shortcut #${i}"}
-            assert(s.shortName != null) { "Missing `short_name` in shortcut #${i}"}
-            assert(s.url != null) { "Missing `icon` in shortcut #${i}" }
-            assert(s.icon != null) { "Missing `url` in shortcut #${i}" }
-        }
+        assert(twaManifest.shortcuts?.size!! < 5)  { "You can have at most 4 shortcuts." }
+    twaManifest.shortcuts.forEachIndexed { i, s ->
+        assert(s.name != null) { "Missing `name` in shortcut #${i}"}
+        assert(s.shortName != null) { "Missing `short_name` in shortcut #${i}"}
+        assert(s.url != null) { "Missing `icon` in shortcut #${i}" }
+        assert(s.icon != null) { "Missing `url` in shortcut #${i}" }
+    }
 
         val shortcutsFile = File("${projectDir}/src/main/res/xml/shortcuts.xml")
 
